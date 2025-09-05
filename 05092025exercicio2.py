@@ -1,11 +1,11 @@
 def formulario():
-    # Nome: mínimo 4 caracteres
+    # Nome: mínimo 4 caracteres, sem números
     while True:
-        nome = input("Digite seu nome (mínimo 4 caracteres): ").strip()
-        if len(nome) >= 4:
+        nome = input("Digite seu nome (mínimo 4 caracteres, sem números): ").strip()
+        if len(nome) >= 4 and not any(char.isdigit() for char in nome):
             break
         else:
-            print("❌ Erro: o nome deve ter pelo menos 4 caracteres.")
+            print("❌ Erro: o nome deve ter pelo menos 4 caracteres e não pode conter números.")
 
     # Idade: entre 1 e 100
     while True:
@@ -18,10 +18,11 @@ def formulario():
         except ValueError:
             print("❌ Erro: digite um número inteiro válido.")
 
-    # Salário: valor positivo
+    # Salário: valor positivo, aceita vírgula ou ponto
     while True:
         try:
-            salario = float(input("Digite seu salário (valor positivo): "))
+            salario_texto = input("Digite seu salário (valor positivo, use vírgula ou ponto): ")
+            salario = float(salario_texto.replace(",", "."))
             if salario > 0:
                 break
             else:
@@ -29,18 +30,22 @@ def formulario():
         except ValueError:
             print("❌ Erro: digite um número válido.")
 
-    # Gênero: f, m ou o
+    # Gênero: f, m ou o → mostra por extenso
+    generos = {'f': 'Feminino', 'm': 'Masculino', 'o': 'Outro'}
     while True:
         genero = input("Digite seu gênero (f - feminino, m - masculino, o - outro): ").lower().strip()
-        if genero in ['f', 'm', 'o']:
+        if genero in generos:
+            genero_extenso = generos[genero]
             break
         else:
             print("❌ Erro: gênero inválido. Digite 'f', 'm' ou 'o'.")
 
-    # Situação Empregatícia: e, d ou a
+    # Situação Empregatícia: e, d ou a → mostra por extenso
+    situacoes = {'e': 'Empregado', 'd': 'Desempregado', 'a': 'Autônomo'}
     while True:
         situacao = input("Digite sua situação empregatícia (e - empregado, d - desempregado, a - autônomo): ").lower().strip()
-        if situacao in ['e', 'd', 'a']:
+        if situacao in situacoes:
+            situacao_extenso = situacoes[situacao]
             break
         else:
             print("❌ Erro: situação inválida. Digite 'e', 'd' ou 'a'.")
@@ -50,7 +55,9 @@ def formulario():
     print(f"Nome: {nome}")
     print(f"Idade: {idade}")
     print(f"Salário: R$ {salario:.2f}")
-    print(f"Gênero: {genero}")
-    print(f"Situação Empregatícia: {situacao}")
+    print(f"Gênero: {genero_extenso}")
+    print(f"Situação Empregatícia: {situacao_extenso}")
 
-formulario()
+
+if __name__ == "__main__":
+    formulario()
